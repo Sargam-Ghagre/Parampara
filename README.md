@@ -27,6 +27,14 @@ A community-driven digital archive for preserving rural cultural heritage. Param
 - Node.js (v14 or higher)
 - npm (Node Package Manager)
 
+### Fork the Repository
+Click the **Fork** button on GitHub to create a copy under your account.
+
+### Clone the Repository
+```bash
+git clone https://github.com/YOUR-USERNAME/Parampara.git
+ ```
+
 ### Installation
 
 1. **Clone or navigate to the project directory**
