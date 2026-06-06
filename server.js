@@ -133,7 +133,7 @@ app.post('/api/items', (req, res) => {
         if (!req.body.title || !req.body.type || !req.body.location) {
             return res.status(400).json({ error: 'Missing required fields: title, type, location' });
         }
-        
+
         const newItem = {
             id: Date.now().toString(),
             title: req.body.title,
@@ -163,7 +163,7 @@ app.post('/api/paths', (req, res) => {
         if (!req.body.title || !req.body.theme) {
             return res.status(400).json({ error: 'Missing required fields: title, theme' });
         }
-        
+
         const newPath = {
             id: Date.now().toString(),
             title: req.body.title,
@@ -218,10 +218,8 @@ app.post('/api/chat', (req, res) => {
         if (!req.body.question) {
             return res.status(400).json({ error: 'Question is required' });
         }
-        
         const question = req.body.question.toLowerCase();
         let response = "I'm a cultural curator. Based on our archive, ";
-        
         // Enhanced keyword matching (in production, use proper AI/NLP)
         if (question.includes('blue') && question.includes('door')) {
             response += "in many villages, doors are painted blue to ward off evil spirits and bring prosperity to the home. This tradition is especially common in rural areas where it's believed to protect the household.";
@@ -240,7 +238,7 @@ app.post('/api/chat', (req, res) => {
         } else {
             response += "I can help you learn about rural traditions, crafts, festivals, and stories. Try asking about Kantha embroidery, Madhubani paintings, village festivals, or the traditions of specific regions like Sundarbans or Bengal.";
         }
-        
+
         res.json({ response });
     } catch (error) {
         res.status(500).json({ error: 'Error processing chat request' });
@@ -259,7 +257,7 @@ app.post('/api/checkin', (req, res) => {
         timestamp: new Date().toISOString()
     };
     userProgress[userId].checkIns.push(checkIn);
-    
+
     // Award badge for first check-in
     if (userProgress[userId].checkIns.length === 1) {
         userProgress[userId].badges.push({
@@ -268,7 +266,7 @@ app.post('/api/checkin', (req, res) => {
             date: new Date().toISOString()
         });
     }
-    
+
     res.json({ success: true, checkIn, badges: userProgress[userId].badges });
 });
 
