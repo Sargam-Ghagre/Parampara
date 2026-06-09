@@ -221,6 +221,7 @@ body > * {
 
 /* Hero Section */
 .hero-content {
+    
     display:flex;
     min-height:80vh;
     flex-direction: row;
@@ -238,9 +239,11 @@ body > * {
     align-items:center;
     justify-content: center;
     padding: 2rem 2rem 2rem 3rem;
-    background-image:url("../images/hero-text-image.png");
-    background-position: center;
-    background-size: cover;
+     position: relative;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url('../images/hero-text-image.png');
+  background-size: cover;
 }
 .hero-img{
     min-height: 80vh;

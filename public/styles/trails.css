@@ -5,7 +5,29 @@
     max-width: 1200px;
     margin: 0 auto;
 }
+.trail-card {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+}
+.trail-card img {
+    width: 200px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
 
+.trail-card-body {
+    flex: 1;
+}
 .trails-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -30,15 +52,6 @@
 .trails-list {
     display: grid;
     gap: 2rem;
-}
-
-.trail-card {
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    cursor: pointer;
 }
 
 .trail-card:hover {
