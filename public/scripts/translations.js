@@ -21,7 +21,14 @@ const translations = {
         soundOn: "Ambient Sounds: ON",
         soundOff: "Ambient Sounds: OFF",
 
-        description: "Description"
+        description: "Description",
+
+        mapConfigMessage:
+            "Map tiles require a MapTiler API key. Please add MAPTILER_KEY to your .env file.",
+        mapConfigHint:
+            "Copy .env.example to .env and add a free key from maptiler.com",
+        location: "Location",
+        tags: "Tags"
     },
 
     hi: {
@@ -47,7 +54,14 @@ const translations = {
         soundOn: "पर्यावरण ध्वनि: चालू",
         soundOff: "पर्यावरण ध्वनि: बंद",
 
-        description: "विवरण"
+        description: "विवरण",
+
+        mapConfigMessage:
+            "मानचित्र टाइल्स के लिए MapTiler API कुंजी आवश्यक है। कृपया अपनी .env फ़ाइल में MAPTILER_KEY जोड़ें।",
+        mapConfigHint:
+            ".env.example को .env में कॉपी करें और maptiler.com से एक मुफ्त कुंजी जोड़ें",
+        location: "स्थान",
+        tags: "टैग"
     },
 
     mr: {
@@ -73,6 +87,13 @@ const translations = {
         soundOn: "पर्यावरणीय ध्वनी: चालू",
         soundOff: "पर्यावरणीय ध्वनी: बंद",
 
-        description: "वर्णन"
+        description: "वर्णन",
+
+        mapConfigMessage:
+            "नकाशा टाइल्ससाठी MapTiler API की आवश्यक आहे. कृपया तुमच्या .env फाइलमध्ये MAPTILER_KEY जोडा.",
+        mapConfigHint:
+            ".env.example ला .env मध्ये कॉपी करा आणि maptiler.com वरून विनामूल्य की जोडा",
+        location: "स्थान",
+        tags: "टॅग"
     }
 };
