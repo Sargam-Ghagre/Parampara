@@ -31,6 +31,7 @@
 .paths-list {
     display: grid;
     gap: 2rem;
+        grid-template-columns: repeat(3, 1fr);     
 }
 
 .path-card {
@@ -195,6 +196,7 @@ main.paths-container {
 
 .footer {
     margin: 0;
+}
 /* Back To Top Button */
 #backToTopBtn {
     position: fixed;
@@ -290,4 +292,15 @@ main.paths-container {
     box-shadow:
         0 6px 18px rgba(0, 0, 0, 0.25),
         0 0 12px rgba(205, 133, 63, 0.4);
+}
+@media (max-width: 1023px) {
+    .paths-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .paths-list {
+        grid-template-columns: 1fr;
+    }
 }
