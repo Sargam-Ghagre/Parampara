@@ -6,30 +6,90 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function loadVillagePosts() {
+    const DUMMY_POSTS = [
+        {
+            title: "Warli Festival Begins in Palghar",
+            village: "Palghar, Maharashtra",
+            timestamp: new Date().toISOString(),
+            content: "The annual Warli harvest festival kicked off with traditional dance and painting ceremonies. Over 200 villagers participated.",
+            type: "Festival"
+        },
+        {
+            title: "New Pottery Workshop Opens",
+            village: "Khurja, Uttar Pradesh",
+            timestamp: new Date(Date.now() - 86400000).toISOString(),
+            content: "Local artisan Ramesh Kumhar has opened a free pottery workshop for village youth, teaching traditional blue pottery techniques.",
+            type: "Craft"
+        },
+        {
+            title: "Elder Storytelling Session Recorded",
+            village: "Bishnoi, Rajasthan",
+            timestamp: new Date(Date.now() - 2 * 86400000).toISOString(),
+            content: "90-year-old Dadi Kamla shared tales of the Bishnoi conservation movement — now archived in 3 languages.",
+            type: "Story"
+        },
+        {
+            title: "Heritage Bamboo Bridge Restored",
+            village: "Majuli, Assam",
+            timestamp: new Date(Date.now() - 3 * 86400000).toISOString(),
+            content: "Community volunteers restored the 80-year-old bamboo bridge using traditional Mising tribe construction methods.",
+            type: "Restoration"
+        },
+        {
+            title: "Phad Painting Exhibition Next Week",
+            village: "Shahpura, Rajasthan",
+            timestamp: new Date(Date.now() - 4 * 86400000).toISOString(),
+            content: "Local Bhopa community is hosting a live Phad painting demo — a 700-year-old narrative scroll art tradition.",
+            type: "Art"
+        },
+        {
+            title: "Tribal Music Archive — 50 Songs Added",
+            village: "Bastar, Chhattisgarh",
+            timestamp: new Date(Date.now() - 5 * 86400000).toISOString(),
+            content: "Gond tribal musicians contributed 50 rare folk songs to the archive, many never recorded before.",
+            type: "Music"
+        }
+    ];
+
     try {
         const response = await fetch('/api/posts');
+        if (!response.ok) throw new Error('API unavailable');
         const posts = await response.json();
-        
+
         const postsGrid = document.getElementById('village-posts');
         if (!postsGrid) return;
-        
+
         if (posts.length === 0) {
-            postsGrid.innerHTML = '<p style="text-align: center; color: white;">No posts yet. Check back soon for updates from villages!</p>';
+            renderPosts(postsGrid, DUMMY_POSTS, true);
             return;
         }
-        
-        postsGrid.innerHTML = posts.slice(0, 6).map(post => `
-            <div class="post-card">
-                <h4>${escapeHtml(post.title)}</h4>
-                <p class="post-meta">${post.village} • ${formatDate(post.timestamp)}</p>
-                <p>${escapeHtml(post.content)}</p>
-                <span style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--primary-color); border-radius: 20px; font-size: 0.85rem; margin-top: 1rem;">
-                    ${post.type}
-                </span>
-            </div>
-        `).join('');
+
+        renderPosts(postsGrid, posts.slice(0, 6), false);
+
     } catch (error) {
         console.error('Error loading posts:', error);
+        const postsGrid = document.getElementById('village-posts');
+        if (postsGrid) renderPosts(postsGrid, DUMMY_POSTS, true);
+    }
+}
+
+function renderPosts(container, posts, isDummy) {
+    container.innerHTML = posts.map(post => `
+        <div class="post-card">
+            <h4>${escapeHtml(post.title)}</h4>
+            <p class="post-meta">${post.village} • ${formatDate(post.timestamp)}</p>
+            <p>${escapeHtml(post.content)}</p>
+            <span style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--primary-color); border-radius: 20px; font-size: 0.85rem; margin-top: 1rem; color:white ">
+                ${post.type}
+            </span>
+        </div>
+    `).join('');
+
+    if (isDummy) {
+        const note = document.createElement('p');
+        note.style.cssText = 'text-align:center; color: rgba(255,255,255,0.6); font-size:0.85rem; margin-top:1rem;';
+        note.textContent = '✦ Sample stories — live updates coming soon';
+        container.appendChild(note);
     }
 }
 
