@@ -266,7 +266,7 @@ interface TechDebt {
   owner: string;
   createdAt: Date;
   targetQuarter?: string;
-  status: "backlog" | "prioritized" | "in-progress" | "done";
+  status: 'backlog' | 'prioritized' | 'in-progress' | 'done';
 
   // Context
   affectedSystems: string[];
@@ -274,7 +274,7 @@ interface TechDebt {
 
   // Plan
   implementationPlan?: string;
-  roi?: "low" | "medium" | "high" | "very-high";
+  roi?: 'low' | 'medium' | 'high' | 'very-high';
 }
 ```
 

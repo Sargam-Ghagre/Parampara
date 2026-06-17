@@ -25,7 +25,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: "user" | "admin";
+  role: 'user' | 'admin';
   createdAt: Date;
   updatedAt: Date;
 }
@@ -59,16 +59,16 @@ export interface ApiError {
 
 ```typescript
 // schemas/user.schema.ts
-import { z } from "zod";
+import { z } from 'zod';
 
 export const createUserSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email('Invalid email address'),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
   password: z
     .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain uppercase letter")
-    .regex(/[0-9]/, "Password must contain number"),
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain uppercase letter')
+    .regex(/[0-9]/, 'Password must contain number'),
 });
 
 export const updateUserSchema = z
@@ -77,14 +77,14 @@ export const updateUserSchema = z
     email: z.string().email().optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
-    message: "At least one field must be provided",
+    message: 'At least one field must be provided',
   });
 
 export const getUsersQuerySchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
-  sortBy: z.enum(["name", "email", "createdAt"]).optional(),
-  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+  sortBy: z.enum(['name', 'email', 'createdAt']).optional(),
+  sortOrder: z.enum(['asc', 'desc']).default('desc'),
   search: z.string().optional(),
 });
 
@@ -97,22 +97,22 @@ export type GetUsersQuery = z.infer<typeof getUsersQuerySchema>;
 
 ```typescript
 // routes/users.routes.ts
-import { Router } from "express";
-import { UserController } from "../controllers/user.controller";
-import { validateRequest } from "../middleware/validate";
-import { authenticate } from "../middleware/auth";
+import { Router } from 'express';
+import { UserController } from '../controllers/user.controller';
+import { validateRequest } from '../middleware/validate';
+import { authenticate } from '../middleware/auth';
 import {
   createUserSchema,
   updateUserSchema,
   getUsersQuerySchema,
-} from "../schemas/user.schema";
+} from '../schemas/user.schema';
 
 const router = Router();
 const controller = new UserController();
 
 // Create
 router.post(
-  "/",
+  '/',
   authenticate,
   validateRequest({ body: createUserSchema }),
   controller.create
@@ -120,25 +120,25 @@ router.post(
 
 // Read (list)
 router.get(
-  "/",
+  '/',
   authenticate,
   validateRequest({ query: getUsersQuerySchema }),
   controller.list
 );
 
 // Read (single)
-router.get("/:id", authenticate, controller.getById);
+router.get('/:id', authenticate, controller.getById);
 
 // Update
 router.patch(
-  "/:id",
+  '/:id',
   authenticate,
   validateRequest({ body: updateUserSchema }),
   controller.update
 );
 
 // Delete
-router.delete("/:id", authenticate, controller.delete);
+router.delete('/:id', authenticate, controller.delete);
 
 export default router;
 ```
@@ -147,14 +147,14 @@ export default router;
 
 ```typescript
 // controllers/user.controller.ts
-import { Request, Response, NextFunction } from "express";
-import { UserService } from "../services/user.service";
+import { Request, Response, NextFunction } from 'express';
+import { UserService } from '../services/user.service';
 import {
   CreateUserDto,
   UpdateUserDto,
   GetUsersQuery,
-} from "../types/user.types";
-import { ApiResponse } from "../types/api.types";
+} from '../types/user.types';
+import { ApiResponse } from '../types/api.types';
 
 export class UserController {
   private service = new UserService();
@@ -216,8 +216,8 @@ export class UserController {
         return res.status(404).json({
           success: false,
           error: {
-            code: "USER_NOT_FOUND",
-            message: "User not found",
+            code: 'USER_NOT_FOUND',
+            message: 'User not found',
           },
         });
       }
@@ -241,8 +241,8 @@ export class UserController {
         return res.status(404).json({
           success: false,
           error: {
-            code: "USER_NOT_FOUND",
-            message: "User not found",
+            code: 'USER_NOT_FOUND',
+            message: 'User not found',
           },
         });
       }
@@ -266,8 +266,8 @@ export class UserController {
         return res.status(404).json({
           success: false,
           error: {
-            code: "USER_NOT_FOUND",
-            message: "User not found",
+            code: 'USER_NOT_FOUND',
+            message: 'User not found',
           },
         });
       }
@@ -283,8 +283,8 @@ export class UserController {
 
 ```typescript
 // middleware/validate.ts
-import { Request, Response, NextFunction } from "express";
-import { ZodSchema } from "zod";
+import { Request, Response, NextFunction } from 'express';
+import { ZodSchema } from 'zod';
 
 interface ValidationSchemas {
   body?: ZodSchema;
@@ -310,8 +310,8 @@ export const validateRequest = (schemas: ValidationSchemas) => {
         return res.status(400).json({
           success: false,
           error: {
-            code: "VALIDATION_ERROR",
-            message: "Invalid request data",
+            code: 'VALIDATION_ERROR',
+            message: 'Invalid request data',
             details: error.flatten().fieldErrors,
           },
         });
@@ -335,45 +335,45 @@ import {
   Body,
   Param,
   Query,
-} from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { UsersService } from "./users.service";
-import { CreateUserDto, UpdateUserDto, GetUsersQueryDto } from "./dto";
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { UsersService } from './users.service';
+import { CreateUserDto, UpdateUserDto, GetUsersQueryDto } from './dto';
 
-@ApiTags("users")
-@Controller("users")
+@ApiTags('users')
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @ApiOperation({ summary: "Create user" })
-  @ApiResponse({ status: 201, description: "User created" })
-  @ApiResponse({ status: 400, description: "Validation error" })
+  @ApiOperation({ summary: 'Create user' })
+  @ApiResponse({ status: 201, description: 'User created' })
+  @ApiResponse({ status: 400, description: 'Validation error' })
   async create(@Body() dto: CreateUserDto) {
     return this.usersService.create(dto);
   }
 
   @Get()
-  @ApiOperation({ summary: "List users" })
+  @ApiOperation({ summary: 'List users' })
   async findAll(@Query() query: GetUsersQueryDto) {
     return this.usersService.findAll(query);
   }
 
-  @Get(":id")
-  @ApiOperation({ summary: "Get user by ID" })
-  async findOne(@Param("id") id: string) {
+  @Get(':id')
+  @ApiOperation({ summary: 'Get user by ID' })
+  async findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
-  @Put(":id")
-  @ApiOperation({ summary: "Update user" })
-  async update(@Param("id") id: string, @Body() dto: UpdateUserDto) {
+  @Put(':id')
+  @ApiOperation({ summary: 'Update user' })
+  async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return this.usersService.update(id, dto);
   }
 
-  @Delete(":id")
-  @ApiOperation({ summary: "Delete user" })
-  async remove(@Param("id") id: string) {
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete user' })
+  async remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 }

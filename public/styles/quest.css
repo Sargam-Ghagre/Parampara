@@ -253,8 +253,7 @@
 
 /* Hover Effect */
 #backToTopBtn:hover {
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.35)
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 /* Click Effect */

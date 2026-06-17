@@ -5,6 +5,7 @@ A community-driven digital archive for preserving rural cultural heritage. Param
 ## 🌟 Features
 
 ### Core Features
+
 - **Cultural Mapping**: Interactive map-based exploration of rural villages and their unique traditions
 - **Audio Stories**: Record and preserve oral histories from village elders
 - **Visual Archive**: Gallery of traditional crafts (Kantha, Madhubani, Dokra) with detailed descriptions
@@ -16,6 +17,7 @@ A community-driven digital archive for preserving rural cultural heritage. Param
 - **Live Updates**: Real-time posts from villages about festivals and events
 
 ### Key Highlights
+
 - **Heatmap Visualization**: See cultural activity intensity across regions
 - **Ambient Sounds**: Immersive audio experience when exploring villages
 - **Digital Passports**: Track your cultural exploration journey
@@ -24,17 +26,20 @@ A community-driven digital archive for preserving rural cultural heritage. Param
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - npm (Node Package Manager)
 
 ### Installation
 
 1. **Clone or navigate to the project directory**
+
    ```bash
    cd Parampara
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
@@ -55,11 +60,13 @@ A community-driven digital archive for preserving rural cultural heritage. Param
    The map page loads without a key and shows setup instructions. Add a MapTiler key to enable interactive map tiles, village markers, and heatmap overlays.
 
 4. **Start the server**
+
    ```bash
    npm start
    ```
-   
+
    For development with auto-reload:
+
    ```bash
    npm run dev
    ```
@@ -107,61 +114,77 @@ Parampara/
 - **Mapping**: MapLibre GL JS, MapTiler
 - **Styling**: Custom CSS with modern design principles
 
-
 ## 🎨 Features in Detail
 
 ### 1. Cultural Mapping
+
 Explore villages on an interactive map. Click on markers to learn about traditions, festivals, and crafts. Toggle heatmap view to see cultural activity intensity.
 
 ### 2. Visual Archive
+
 Browse and contribute to a gallery of traditional crafts. Each item includes descriptions, locations, and tags for easy discovery.
 
 ### 3. Heritage Paths
+
 Follow curated journeys that tell a story. Paths connect multiple cultural items in a narrative sequence, complete with audio and images.
 
 ### 4. Discovery Quest
+
 Engage in scavenger hunts to unlock digital badges. Complete objectives by exploring the archive and visiting villages.
 
 ### 5. Heritage Trails
+
 Plan responsible visits to villages. Get contact information for local hosts, learn dos and don'ts, and find route information.
 
 ### 6. AI Chat
-Ask questions about rural traditions, crafts, festivals, and stories. The AI curator draws from the archive to provide answers.
 
+Ask questions about rural traditions, crafts, festivals, and stories. The AI curator draws from the archive to provide answers.
 
 ## 💡 How You Can Contribute?
 
-| Category | Description |
-| :--- | :--- |
+| Category         | Description                                  |
+| :--------------- | :------------------------------------------- |
 | ✏️ **Fix Typos** | Improve writing and fix documentation errors |
-| 🎨 **Design** | Make it look better and prettier |
-| 📝 **Content** | Add new guides and tutorials |
-| 🐛 **Bugs** | Find and fix bugs in the code |
-| 💡 **Ideas** | Share awesome ideas for new features |
+| 🎨 **Design**    | Make it look better and prettier             |
+| 📝 **Content**   | Add new guides and tutorials                 |
+| 🐛 **Bugs**      | Find and fix bugs in the code                |
+| 💡 **Ideas**     | Share awesome ideas for new features         |
 
 ---
 
 ## 📋 Submitting Your Changes
 
 ### Step 1: Fork the repo
+
 ### Step 2: Create a New Branch
+
 ```bash
 git checkout -b feature/your-feature-name
 ```
+
 ### Step 3: Make Your Changes
+
 Implement your updates following project guidelines.
+
 ### Step 4: Test Locally
+
 Ensure everything works correctly before committing.
+
 ### Step 5: Commit Your Work
+
 ```bash
 git add .
 git commit -m "Brief description of your changes"
 ```
+
 ### Step 6: Push to GitHub
+
 ```bash
 git push origin feature/your-feature-name
 ```
+
 ### Step 7: Create a Pull Request
+
 Go to GitHub and click "Create Pull Request". Done! 🚀
 
 Read the [Contributors Guide](CONTRIBUTING.md) for detailed instructions.

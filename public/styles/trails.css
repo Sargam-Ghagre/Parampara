@@ -165,7 +165,9 @@
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .trail-feature:hover {
@@ -187,7 +189,9 @@
   padding: 0.85rem 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .trail-actions .btn:hover {
@@ -283,14 +287,14 @@
 }
 
 .dos-list li:before {
-  content: "✓";
+  content: '✓';
   position: absolute;
   left: 0;
   color: var(--success);
 }
 
 .donts-list li:before {
-  content: "✗";
+  content: '✗';
   position: absolute;
   left: 0;
   color: #e74c3c;

@@ -1,14 +1,13 @@
-const store = require("../data/store");
+const store = require('../data/store');
 
 const getPosts = (req, res) => {
   res.json(store.villagePosts);
 };
 
 const createPost = (req, res) => {
-
   if (!req.body.title || !req.body.village) {
     return res.status(400).json({
-      error: "Village and title are required"
+      error: 'Village and title are required',
     });
   }
 
@@ -19,7 +18,7 @@ const createPost = (req, res) => {
     content: req.body.content,
     type: req.body.type,
     date: req.body.date,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   store.villagePosts.push(newPost);
@@ -29,5 +28,5 @@ const createPost = (req, res) => {
 
 module.exports = {
   getPosts,
-  createPost
+  createPost,
 };

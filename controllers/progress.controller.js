@@ -1,4 +1,4 @@
-const store = require("../data/store");
+const store = require('../data/store');
 
 const getProgress = (req, res) => {
   const userId = req.params.userId;

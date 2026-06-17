@@ -1,10 +1,8 @@
-
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { checkIn } = require("../controllers/checkin.controller");
+const { checkIn } = require('../controllers/checkin.controller');
 
+router.post('/', checkIn);
 
-router.post("/", checkIn);
-
-module.exports = router ;
+module.exports = router;

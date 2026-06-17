@@ -4,9 +4,9 @@
 
 The following versions of **Parampara** are currently supported with security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| main    | ✅ Yes             |
+| Version | Supported |
+| ------- | --------- |
+| main    | ✅ Yes    |
 
 ## Contact Details
 
@@ -27,11 +27,11 @@ To report a security vulnerability in **Parampara**, please reach out via:
 
 ## Expected Response Time
 
-| Action                        | Timeframe         |
-| ----------------------------- | ----------------- |
-| Acknowledgement of report     | Within 48 hours   |
-| Status update                 | Within 7 days     |
-| Patch / fix release           | Within 30 days    |
+| Action                    | Timeframe       |
+| ------------------------- | --------------- |
+| Acknowledgement of report | Within 48 hours |
+| Status update             | Within 7 days   |
+| Patch / fix release       | Within 30 days  |
 
 ## Responsible Disclosure Policy
 
