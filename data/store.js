@@ -1,4 +1,3 @@
-
 const store = {
   culturalItems: [],
   heritagePaths: [],

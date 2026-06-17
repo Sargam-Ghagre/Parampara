@@ -55,7 +55,7 @@
   box-shadow: 0 0 0 3px rgba(201, 125, 96, 0.2);
 }
 
-.search-input::placeholder{
+.search-input::placeholder {
   color: var(--primary-color);
   font-weight: 600;
 }
@@ -71,7 +71,7 @@
   cursor: pointer;
 }
 
-.filter-select option{
+.filter-select option {
   width: 100%;
 }
 
@@ -189,7 +189,7 @@
   background: rgba(212, 165, 116, 0.3);
 }
 
-.item-checkbox input[type="checkbox"] {
+.item-checkbox input[type='checkbox'] {
   cursor: pointer;
 }
 
@@ -230,8 +230,7 @@
 
 /* Hover Effect */
 #backToTopBtn:hover {
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.35)
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 /* Click Effect */

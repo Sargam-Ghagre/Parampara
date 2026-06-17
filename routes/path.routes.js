@@ -1,11 +1,11 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
 
-const { createPath, getPaths } = require("../controllers/path.controller");
+const { createPath, getPaths } = require('../controllers/path.controller');
 
-router.get("/", getPaths);
+router.get('/', getPaths);
 
-router.post("/", createPath);
+router.post('/', createPath);
 
 module.exports = router;
