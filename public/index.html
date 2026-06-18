@@ -23,22 +23,24 @@
     <!-- Navigation -->
     <nav class="navbar">
       <div class="nav-container">
-        <div class="logo">
-          <h1 data-i18n="brand_name">Parampara</h1>
-          <p class="tagline" data-i18n="brand_tagline">
-            Preserving Living Traditions
-          </p>
+        <div class="nav-logo-btn">
+          <div class="logo">
+            <h1 data-i18n="brand_name">Parampara</h1>
+            <p class="tagline" data-i18n="brand_tagline">
+              Preserving Living Traditions
+            </p>
+          </div>
+          <button
+            class="hamburger"
+            id="hamburgerBtn"
+            aria-label="Toggle navigation"
+          >
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
         </div>
         <!-- Language selector injected here by language-switcher.js -->
-        <button
-          class="hamburger"
-          id="hamburgerBtn"
-          aria-label="Toggle navigation"
-        >
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </button>
         <ul class="nav-menu" id="navMenu">
           <li>
             <a href="index.html" class="active"
@@ -67,12 +69,6 @@
           <li>
             <a href="chat.html"
               ><i class="ti ti-message-circle"></i> Talk to Elder</a
-            >
-          </li>
-          <li>
-            <a href="risk-dashboard.html"
-              ><i class="ti ti-alert-triangle"></i>
-              <span data-i18n="nav_risk">Risk Dashboard</span></a
             >
           </li>
         </ul>
@@ -227,6 +223,6 @@
     <script src="scripts/main.js"></script>
     <script src="scripts/translations.js"></script>
     <script src="scripts/languageSwitcher.js"></script>
-    <!-- <script src="scripts/navbar.js"></script> -->
+    <script src="scripts/navbar.js"></script>
   </body>
 </html>
