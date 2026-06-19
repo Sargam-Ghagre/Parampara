@@ -3,6 +3,7 @@ const store = {
   heritagePaths: [],
   userProgress: {},
   villagePosts: [],
+  contributors: [],
 };
 
 module.exports = store;

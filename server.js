@@ -90,6 +90,49 @@ app.use('/api/chat', chatRoutes);
 
 app.use('/api/checkin', checkinRoutes);
 
+app.get('/api/reputation', (req, res, next) => {
+  try {
+    const contributors = store.contributors || [];
+    const calculated = contributors.map((c) => {
+      const score =
+        (c.stories || 0) * 20 +
+        (c.photos || 0) * 10 +
+        (c.culturalItems || 0) * 30 +
+        (c.checkins || 0) * 5 +
+        (c.quests || 0) * 15;
+
+      let badge = 'Heritage Explorer';
+      if (score >= 400) {
+        badge = 'Heritage Guardian';
+      } else if (score >= 250) {
+        badge = 'Cultural Archivist';
+      } else if (score >= 100) {
+        badge = 'Story Collector';
+      }
+
+      return {
+        id: c.id,
+        name: c.name,
+        stories: c.stories || 0,
+        photos: c.photos || 0,
+        culturalItems: c.culturalItems || 0,
+        checkins: c.checkins || 0,
+        quests: c.quests || 0,
+        score,
+        badge,
+        memberSince: c.memberSince,
+      };
+    });
+
+    // Sort by score descending
+    calculated.sort((a, b) => b.score - a.score);
+
+    res.json(calculated);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/api/risk-dashboard', (req, res, next) => {
   try {
     const items = store.culturalItems || [];

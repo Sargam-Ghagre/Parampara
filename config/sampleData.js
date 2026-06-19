@@ -86,6 +86,39 @@ function initializeSampleData() {
     title: 'The Journey of Kantha Stitch',
     theme: 'Embroidery Traditions',
   });
+
+  store.contributors.push({
+    id: 1,
+    name: 'Rahul Sharma',
+    stories: 15,
+    photos: 30,
+    culturalItems: 5,
+    checkins: 10,
+    quests: 0,
+    memberSince: 'January 2026',
+  });
+
+  store.contributors.push({
+    id: 2,
+    name: 'Priya Singh',
+    stories: 10,
+    photos: 20,
+    culturalItems: 4,
+    checkins: 8,
+    quests: 0,
+    memberSince: 'February 2026',
+  });
+
+  store.contributors.push({
+    id: 3,
+    name: 'Aman Patel',
+    stories: 5,
+    photos: 10,
+    culturalItems: 2,
+    checkins: 6,
+    quests: 0,
+    memberSince: 'March 2026',
+  });
 }
 
 module.exports = initializeSampleData;
