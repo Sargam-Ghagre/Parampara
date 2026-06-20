@@ -616,6 +616,11 @@ body > * {
 .post-card h4 {
   color: #f0e68c;
   margin-bottom: 0.5rem;
+  height: 4rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
   font-weight: bold;
   font-size: 1.2rem;
 }
