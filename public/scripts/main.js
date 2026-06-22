@@ -138,30 +138,43 @@ backToTopBtn.addEventListener("click", () => {
   });
 });
 
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const navMenu = document.getElementById("navMenu");
-
-hamburgerBtn.addEventListener("click", () => {
-  hamburgerBtn.classList.toggle("open");
-  navMenu.classList.toggle("open");
-});
-
-// Close menu when any link is clicked
-navMenu.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    hamburgerBtn.classList.remove("open");
-    navMenu.classList.remove("open");
-  });
-});
-
-// Close menu on outside click
-document.addEventListener("click", (e) => {
-  if (!hamburgerBtn.contains(e.target) && !navMenu.contains(e.target)) {
-    hamburgerBtn.classList.remove("open");
-    navMenu.classList.remove("open");
-  }
-});
-
 window.addEventListener("parampara:langchange", () => {
   loadVillagePosts();
+});
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadVillagePosts();
+
+  // ===== HAMBURGER NAV =====
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const navFullMenu = document.getElementById("navFullMenu");
+  const navOverlay = document.getElementById("navOverlay");
+
+  if (!hamburgerBtn || !navFullMenu || !navOverlay) {
+    console.warn("Nav elements not found");
+    return;
+  }
+
+  function toggleNavMenu(forceOpen) {
+    const isOpen = forceOpen !== undefined
+      ? forceOpen
+      : !navFullMenu.classList.contains("open");
+
+    hamburgerBtn.classList.toggle("open", isOpen);
+    navFullMenu.classList.toggle("open", isOpen);
+    navOverlay.classList.toggle("open", isOpen);
+    document.body.style.overflow = isOpen ? "hidden" : "";
+  }
+
+  hamburgerBtn.addEventListener("click", () => toggleNavMenu());
+  navOverlay.addEventListener("click", () => toggleNavMenu(false));
+
+  document.querySelectorAll(".nav-fullmenu-grid a").forEach((link) => {
+    link.addEventListener("click", () => toggleNavMenu(false));
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") toggleNavMenu(false);
+  });
 });
