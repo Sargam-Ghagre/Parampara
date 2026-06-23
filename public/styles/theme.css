@@ -1706,7 +1706,7 @@ body > * {
   .hamburger .bar {
     display: block;
     width: 22px;
-    height: 2.5px;
+    height: 1px;
     background: var(--warm-beige);
     border-radius: 4px;
     transition: var(--transition);
