@@ -1,4 +1,3 @@
-// Map Page JavaScript
 let map;
 let markers = [];
 let heatmapLayer = null;

@@ -99,11 +99,11 @@ function displayItems(items) {
             </div>
             <div class="gallery-item-content">
                 <span class="gallery-item-type">${translateType(item.type)}</span>
+                <div class="gallery-item-location">
+                    <span class = "gallery-item-location-marker">📍</span> <strong>${escapeHtml(item.location)}</strong>
+                </div>
                 <h3>${escapeHtml(item.title)}</h3>
                 <p>${escapeHtml(item.description.substring(0, 100))}${item.description.length > 100 ? '...' : ''}</p>
-                <div class="gallery-item-location">
-                    📍 <strong>${escapeHtml(item.location)}</strong>
-                </div>
                 ${
                   item.tags && item.tags.length > 0
                     ? `
