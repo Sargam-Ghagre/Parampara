@@ -88,7 +88,7 @@ function renderArtisanGrid(artisans) {
   if (!grid) return;
   grid.innerHTML = artisans.map(a => `
     <div class="card" data-id="${a.id}" role="button" tabindex="0">
-      <img src="${a.portfolio && a.portfolio[0] ? a.portfolio[0].image : 'images/default-artisan.jpg'}" alt="${a.name}">
+      <img src="${a.portfolio && a.portfolio[0] ? a.portfolio[0].image : 'images/default-artisan.jpg'}" alt="${a.name}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')">
       <div class="content">
         <h3>${escapeHtml(a.name)}</h3>
         <p>${escapeHtml(a.craft)}</p>

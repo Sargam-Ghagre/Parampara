@@ -342,7 +342,7 @@ function displayPathStep() {
         <div class="path-step">
             ${
               stepItem.imageUrl
-                ? `<img src="${stepItem.imageUrl}" alt="${escapeHtml(stepItem.title)}" class="path-step-image">`
+                ? `<img src="${stepItem.imageUrl}" alt="${escapeHtml(stepItem.title)}" class="path-step-image lazy-img" loading="lazy" onload="this.classList.add('loaded')">`
                 : `<div style="text-align:center;font-size:4rem;padding:2rem;">🖼️</div>`
             }
             <h4>${escapeHtml(stepItem.title)}</h4>

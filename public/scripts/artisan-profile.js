@@ -35,7 +35,7 @@ function renderArtisan(artisan) {
 
   const portfolioHTML = portfolio && portfolio.length ? `
     <div class="grid">
-      ${portfolio.map(src => `<img src="${src}" alt="${name} work" loading="lazy" />`).join('')}
+      ${portfolio.map(src => `<img src="${src}" alt="${name} work" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" />`).join('')}
     </div>
   ` : '';
 
@@ -47,7 +47,7 @@ function renderArtisan(artisan) {
 
   container.innerHTML = `
     <section class="profile-header" id="profileHeader">
-      <img src="${profileImage || 'https://via.placeholder.com/200'}" alt="${name}" loading="lazy" />
+      <img src="${profileImage || 'https://via.placeholder.com/200'}" alt="${name}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" />
       <div class="info">
         <h2>${name}</h2>
         <p data-i18n="craft">Craft: ${craft}</p>

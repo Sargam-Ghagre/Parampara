@@ -136,7 +136,7 @@ function displayTrails() {
             </div>
         </div>
                      <div class="trail-image-wrap">
-            <img src="${trail.image}" alt="${escapeHtml(tTrail(trail.titleKey))}" class="trail-image" loading="lazy"> 
+            <img src="${trail.image}" alt="${escapeHtml(tTrail(trail.titleKey))}" class="trail-image lazy-img" loading="lazy" onload="this.classList.add('loaded')"> 
                     </div>
      </div>
 `

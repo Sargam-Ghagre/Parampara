@@ -124,7 +124,7 @@ function displayFavorites(items) {
             <div class="gallery-item-image" style="position:relative;">
                 ${
                   item.imageUrl
-                    ? `<img src="${item.imageUrl}" alt="${escapeHtml(item.title)}" style="width:100%;height:100%;object-fit:cover;">`
+                    ? `<img src="${item.imageUrl}" alt="${escapeHtml(item.title)}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" style="width:100%;height:100%;object-fit:cover;">`
                     : `<span>${getTypeIcon(item.type)}</span>`
                 }
                 <button
