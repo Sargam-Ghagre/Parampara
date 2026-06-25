@@ -1093,7 +1093,53 @@ body>* {
   font-weight: 600;
   margin-top: 0.25rem;
 }
+/* Footer Social Icons */
 
+.footer-links ul li a img {
+  width: 22px;
+  height: 22px;
+
+  filter:
+    brightness(0) saturate(100%) invert(72%) sepia(43%) saturate(534%) hue-rotate(359deg) brightness(96%) contrast(88%);
+
+  transition: all 0.3s ease;
+}
+
+.footer-links ul li a:hover img {
+  filter:
+    brightness(0) saturate(100%) invert(86%) sepia(31%) saturate(743%) hue-rotate(7deg) brightness(105%) contrast(95%);
+
+  transform: translateY(-3px) scale(1.15);
+}
+
+.footer-links ul {
+  gap: 14px;
+}
+
+.footer-links ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: rgba(205, 133, 63, 0.12);
+
+  border: 1px solid rgba(205, 133, 63, 0.25);
+
+  transition: all 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  background: rgba(240, 230, 140, 0.15);
+
+  border-color: rgba(240, 230, 140, 0.4);
+
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.25);
+}
 /* ===== RESPONSIVE ===== */
 @media (max-width: 920px) {
   .hero-content {
