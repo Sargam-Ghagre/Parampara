@@ -1317,3 +1317,5 @@ const PARAMPARA_TRANSLATIONS = {
     minutes: 'मिनिटे',
   },
 };
+
+module.exports = { translations, PARAMPARA_TRANSLATIONS };
