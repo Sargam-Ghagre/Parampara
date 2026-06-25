@@ -153,6 +153,11 @@
   font-weight: 600;
 }
 
+.gallery-item-location-marker{
+      border: 1px solid var(--danger-color);
+    border-radius: 50%;
+}
+
 .gallery-item-tags {
   display: flex;
   flex-wrap: wrap;

@@ -77,15 +77,6 @@ background: var(--theme-overlay) !important;
 TYPOGRAPHY
 ========================================== */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-color: var(--theme-text) !important;
-}
-
 p,
 span,
 small,
@@ -879,6 +870,8 @@ body > * {
 
 /* ===== BUTTONS ===== */
 .btn {
+  width: 18rem;
+    margin: 0 auto;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: var(--border-radius);
@@ -1183,17 +1176,6 @@ body > * {
   z-index: 1;
 }
 
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: var(--warm-beige);
-  text-shadow:
-    3px 3px 6px rgba(45, 24, 16, 0.7),
-    1px 1px 3px rgba(0, 0, 0, 0.3);
-  font-weight: bold;
-  letter-spacing: 1px;
-}
 
 .features-grid {
   display: grid;
@@ -1726,7 +1708,7 @@ body > * {
   .hamburger .bar {
     display: block;
     width: 22px;
-    height: 2.5px;
+    height: 1px;
     background: var(--warm-beige);
     border-radius: 4px;
     transition: var(--transition);
@@ -1796,9 +1778,6 @@ body > * {
     grid-template-columns: 1fr;
   }
 
-  .section-title {
-    font-size: 1.5rem;
-  }
 }
 
 @media (max-width: 320px) {
@@ -1900,7 +1879,6 @@ body > * {
 
 .hero-title,
 .hero-subtitle,
-.section-title,
 .feature-card h3,
 .post-card h4{
   color: var(--text-dark) ;

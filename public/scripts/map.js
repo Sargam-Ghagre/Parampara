@@ -1,4 +1,3 @@
-// Map Page JavaScript
 let map;
 let markers = [];
 let heatmapLayer = null;
@@ -14,110 +13,34 @@ let currentLanguage =
 
 document.addEventListener('DOMContentLoaded', () => {
   const selector = document.getElementById('language-selector');
-  selector.value = currentLanguage;
 
-  selector.addEventListener('change', (e) => {
-    currentLanguage = e.target.value;
+  if (selector) {
+    selector.value = currentLanguage;
 
-    localStorage.setItem('parampara_lang', currentLanguage);
-    localStorage.setItem('language', currentLanguage);
+    selector.addEventListener('change', (e) => {
+      currentLanguage = e.target.value;
 
-    if (map && map.isStyleLoaded()) {
-      setMapLanguage(currentLanguage);
-    }
+      localStorage.setItem('parampara_lang', currentLanguage);
+      localStorage.setItem('language', currentLanguage);
 
-    if (map) {
-      addVillageMarkers();
-    }
+      if (map && map.isStyleLoaded()) {
+        setMapLanguage(currentLanguage);
+      }
 
-    translatePage();
-  });
+      if (map) {
+        addVillageMarkers();
+      }
+
+      translatePage();
+    });
+  }
 
   initializeMap();
   setupEventListeners();
   translatePage();
 });
 
-const sampleVillages = [
-  {
-    name: {
-      en: 'Sundarbans Village',
-      hi: 'सुंदरबन गांव',
-      mr: 'सुंदरबन गाव',
-    },
-    coordinates: [21.9497, 88.8156],
-    traditions: {
-      en: [
-        'Folk tales about tigers',
-        'Traditional fishing methods',
-        'Honey collection rituals',
-      ],
-      hi: [
-        'बाघों की लोककथाएँ',
-        'पारंपरिक मछली पकड़ने की विधियाँ',
-        'शहद संग्रह अनुष्ठान',
-      ],
-      mr: ['वाघांच्या लोककथा', 'पारंपरिक मासेमारी पद्धती', 'मध संकलन विधी'],
-    },
-    festivals: {
-      en: ['Bonbibi Puja', 'Honey Festival'],
-      hi: ['बोनबिबी पूजा', 'हनी फेस्टिवल'],
-      mr: ['बोनबिबी पूजा', 'हनी फेस्टिवल'],
-    },
-    crafts: {
-      en: ['Coconut shell crafts', 'Traditional boat making'],
-      hi: ['नारियल शिल्प', 'पारंपरिक नाव निर्माण'],
-      mr: ['नारळ हस्तकला', 'पारंपरिक होडी निर्मिती'],
-    },
-    description: {
-      en: 'A village in the Sundarbans known for its unique relationship with nature and tigers.',
-      hi: 'सुंदरबन का एक गांव जो प्रकृति और बाघों के साथ अपने अनोखे संबंध के लिए प्रसिद्ध है।',
-      mr: 'निसर्ग आणि वाघांशी असलेल्या अनोख्या नात्यासाठी प्रसिद्ध गाव.',
-    },
-    ambientSound: 'birds',
-  },
-
-  {
-    name: {
-      en: 'Kantha Village, Bengal',
-      hi: 'कांथा गांव, बंगाल',
-      mr: 'कांथा गाव, बंगाल',
-    },
-    coordinates: [22.5726, 88.3639],
-    traditions: {
-      en: ['Kantha embroidery', 'Oral storytelling', 'Traditional songs'],
-      hi: ['कांथा कढ़ाई', 'मौखिक कथाएँ', 'पारंपरिक गीत'],
-      mr: ['कांथा भरतकाम', 'लोककथा', 'पारंपरिक गीते'],
-    },
-    festivals: {
-      en: ['Durga Puja', 'Kali Puja'],
-      hi: ['दुर्गा पूजा', 'काली पूजा'],
-      mr: ['दुर्गा पूजा', 'काली पूजा'],
-    },
-    crafts: {
-      en: ['Kantha stitch work', 'Traditional sarees'],
-      hi: ['कांथा सिलाई', 'पारंपरिक साड़ियाँ'],
-      mr: ['कांथा शिवणकाम', 'पारंपरिक साड्या'],
-    },
-    description: {
-      en: 'Famous for Kantha embroidery, where old saris are layered and stitched.',
-      hi: 'कांथा कढ़ाई के लिए प्रसिद्ध, जिसमें पुरानी साड़ियों को जोड़कर सुंदर डिज़ाइन बनाए जाते हैं।',
-      mr: 'कांथा भरतकामासाठी प्रसिद्ध.',
-    },
-    ambientSound: 'flute',
-  },
-
-  {
-    name: {
-      en: 'Madhubani Village, Bihar',
-      hi: 'मधुबनी गांव, बिहार',
-      mr: 'मधुबनी गाव, बिहार',
-    },
-    coordinates: [26.3537, 86.0719],
-    traditions: {
-      en: ['Madhubani painting', 'Mithila art', 'Folk songs'],
-      hi: ['मधुबनी चित्रकला', 'मिथिला कला', 'लोकगीत'],
-      mr: ['मधुबनी चित्रकला', 'मिथिला कला', 'लोकगीते'],
+�गीते'],
     },
     festivals: {
       en: ['Chhath Puja', 'Teej'],
@@ -175,12 +98,13 @@ function getTranslation() {
 function translatePage() {
   const t = getTranslation();
 
-  document.querySelector('.map-header h2').textContent = t.mapTitle;
+  const title = document.querySelector('.map-header h2');
+  const subtitle = document.querySelector('.map-header p');
+  const villageName = document.getElementById('village-name');
 
-  document.querySelector('.map-header p').textContent = t.mapDescription;
-
-  document.getElementById('village-name').textContent = t.selectVillage;
-
+  if (title) title.textContent = t.mapTitle;
+  if (subtitle) subtitle.textContent = t.mapDescription;
+  if (villageName) villageName.textContent = t.selectVillage;
   document.getElementById('info-content').innerHTML =
     `<p>${t.clickVillage}</p>`;
 
@@ -304,7 +228,6 @@ function addVillageMarker(village) {
 
   el.className = 'marker';
 
-  // IMPORTANT: make it clickable
   el.style.width = '20px';
   el.style.height = '20px';
   el.style.borderRadius = '50%';
@@ -313,30 +236,87 @@ function addVillageMarker(village) {
   el.style.cursor = 'pointer';
   el.style.pointerEvents = 'auto';
 
+  const popup = new maplibregl.Popup({
+    closeButton: true,
+    closeOnClick: true,
+    offset: 25,
+  }).setHTML(`
+      <h3>${village.name[currentLanguage]}</h3>
+      <p>${village.description[currentLanguage]}</p>
+  `);
+
   const marker = new maplibregl.Marker(el)
     .setLngLat([village.coordinates[1], village.coordinates[0]])
+    .setPopup(popup)
     .addTo(map);
 
-  // safer: attach via marker element
   marker.getElement().addEventListener('click', (e) => {
-    e.stopPropagation(); // important
+    e.stopPropagation();
+
+    popup
+      .setLngLat([village.coordinates[1], village.coordinates[0]])
+      .addTo(map);
+
     showVillageInfo(village);
-    // playAmbientSound(village.ambientSound);
   });
 
-  markers.push(marker);
+  markers.push({
+    id: village.id,
+    marker,
+    element: el,
+  });
 }
 
-function addVillageMarkers() {
-  if (!map) {
+// Update marker colors based on scores
+async function updateMarkerColors() {
+  if (!map) return;
+  const checkbox = document.getElementById('toggle-heritage-health');
+  const showHealth = checkbox && checkbox.checked;
+
+  // If not showing health view, reset to default colors
+  if (!showHealth) {
+    markers.forEach((m) => {
+      m.element.style.background = '#f4a261';
+    });
     return;
   }
 
-  // Remove existing markers
-  markers.forEach((m) => m.remove());
+  // Fetch scores for all villages
+  const scorePromises = markers.map((m) =>
+    fetch(`/api/heritage-score/village/${m.id}`)
+      .then((res) => res.json())
+      .catch(() => ({ score: 0, category: 'Endangered' }))
+  );
+  const results = await Promise.all(scorePromises);
+
+  results.forEach((result, idx) => {
+    const el = markers[idx].element;
+    let color = '#ff4d4d'; // Endangered (red)
+    if (result.category === 'Thriving') color = '#4caf50'; // green
+    else if (result.category === 'Stable') color = '#2196f3'; // blue
+    else if (result.category === 'Vulnerable') color = '#ff9800'; // orange
+    el.style.background = color;
+    // Optionally set tooltip
+    el.title = `${result.category} (${result.score}/100)`;
+  });
+}
+
+// Listen for toggle change
+const heritageToggle = document.getElementById('toggle-heritage-health');
+if (heritageToggle) {
+  heritageToggle.addEventListener('change', updateMarkerColors);
+}
+
+
+function addVillageMarkers() {
+  if (!map) return;
+
+  markers.forEach((marker) => marker.remove());
   markers = [];
 
-  sampleVillages.forEach((village) => addVillageMarker(village));
+  sampleVillages.forEach((village) => {
+    addVillageMarker(village);
+  });
 }
 
 function showVillageInfo(village) {
@@ -415,7 +395,12 @@ function setupEventListeners() {
   });
 
   heatmapBtn.addEventListener('click', toggleHeatmap);
-  // soundBtn.addEventListener('click', toggleSound);
+  soundBtn.addEventListener('click', toggleSound);
+  // Ensure heritage health view updates when markers are re-added
+  const heritageToggle = document.getElementById('toggle-heritage-health');
+  if (heritageToggle) {
+    heritageToggle.addEventListener('change', updateMarkerColors);
+  }
 }
 
 function toggleHeatmap() {
@@ -490,7 +475,9 @@ async function loadCulturalItems() {
         const el = document.createElement('div');
         el.className = 'cultural-marker';
 
-        new maplibregl.Marker(el)
+        new maplibregl.Marker({
+          element: el,
+        })
           .setLngLat([item.coordinates[1], item.coordinates[0]])
           .addTo(map);
 
@@ -546,24 +533,29 @@ window.addEventListener('parampara:langchange', (e) => {
   translatePage();
 });
 
-const ambientMusic = new Audio("assets/sounds/ambientSound.mp3");
+const ambientMusic = new Audio('assets/sounds/ambientSound.mp3');
 
 ambientMusic.loop = true;
 ambientMusic.volume = 0.3;
 
-let toggle_btn = document.getElementById('toggle-sound');
 function soundToggler() {
   toggleSound = !toggleSound;
-  if(toggleSound){
-    ambientMusic.pause()
-    toggle_btn.textContent = "Ambient Sound : ON"
-  }else{
-    ambientMusic.play()
-    toggle_btn.textContent = "Ambient Sound : OFF"
+  if (toggleSound) {
+    ambientMusic.pause();
+    toggle_btn.textContent = 'Ambient Sound : ON';
+  } else {
+    ambientMusic.play();
+    toggle_btn.textContent = 'Ambient Sound : OFF';
   }
 }
 
-toggle_btn.addEventListener("click", () => {
-  toggle_btn.textContent = ""
-  soundToggler()
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle_btn = document.getElementById('toggle-sound');
+
+  if (toggle_btn) {
+    toggle_btn.addEventListener('click', () => {
+      toggle_btn.textContent = '';
+      soundToggler();
+    });
+  }
 });

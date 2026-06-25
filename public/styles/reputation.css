@@ -37,7 +37,7 @@
 /* Grid Layout */
 .reputation-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 2.5rem;
   align-items: start;
 }
@@ -88,13 +88,13 @@
 .profile-info {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: space-evenly;
   margin-bottom: 1.5rem;
 }
 
 .avatar-wrapper {
-  width: 80px;
-  height: 80px;
+  width: 8rem;
+  height: 8rem;
   background: linear-gradient(135deg, var(--terracotta) 0%, var(--primary-color) 100%);
   border: 3px solid var(--accent-color);
   border-radius: 50%;
@@ -105,7 +105,7 @@
 }
 
 .avatar-emoji {
-  font-size: 2.5rem;
+  font-size: 4.5rem;
 }
 
 .profile-details h4 {
@@ -157,7 +157,7 @@
 
 .score-label {
   font-size: 0.85rem;
-  color: rgba(245, 222, 179, 0.8);
+  color: var(--clay-orange);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -419,4 +419,6 @@
 .date-value,
 .stat-label {
   color: var(--theme-text-secondary) !important;
+  font-weight: 550;
+  font-size: 1rem;
 }
