@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGalleryItems(1, false);
   setupEventListeners();
   setupFavDelegation();  // ← single listener handles ALL heart clicks
+  setupShareDelegation();
 });
 
 // ── Event delegation: one listener on the grid catches every heart-button click
@@ -45,6 +46,32 @@ function setupFavDelegation() {
   });
 }
 
+function setupShareDelegation() {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  grid.addEventListener('click', function(e) {
+    const btn = e.target.closest('.share-card-btn');
+    if (!btn) return;
+    e.stopPropagation(); // prevent opening item card
+
+    const itemId = btn.dataset.itemId;
+    if (!itemId) return;
+
+    const item = allItems.find(i => i.id === itemId);
+    if (!item) return;
+
+    if (window.ShareManager) {
+      window.ShareManager.share({
+        title: item.title,
+        text: item.description,
+        url: window.location.origin + window.location.pathname + '?item=' + encodeURIComponent(item.id)
+      });
+    } else {
+      console.warn('ShareManager not loaded');
+    }
+  });
+}
+
 function setupEventListeners() {
   document.getElementById('add-item-btn').addEventListener('click', () => {
     document.getElementById('add-item-modal').classList.add('active');
@@ -58,9 +85,11 @@ function setupEventListeners() {
     .getElementById('add-item-form')
     .addEventListener('submit', handleAddItem);
 
+  const debouncedFilterItems = debounce(filterItems, 300);
+
   document
     .getElementById('search-input')
-    .addEventListener('input', filterItems);
+    .addEventListener('input', debouncedFilterItems);
   document
     .getElementById('type-filter')
     .addEventListener('change', filterItems);
@@ -186,9 +215,17 @@ function displayItems(items, append = false) {
             <div class="gallery-item-image" style="position:relative;">
                 ${
                   item.imageUrl
-                    ? `<img src="${item.imageUrl}" alt="${escapeHtml(item.title)}" style="width:100%;height:100%;object-fit:cover;">`
+                    ? `<img src="${item.imageUrl}" alt="${escapeHtml(item.title)}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" style="width:100%;height:100%;object-fit:cover;">`
                     : `<span>${getTypeIcon(item.type)}</span>`
                 }
+                <button
+                  class="share-card-btn"
+                  data-item-id="${escapeHtml(item.id)}"
+                  aria-label="Share this item"
+                  title="Share this item"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+                </button>
                 <button
                   class="favorite-btn${isFav ? ' favorited' : ''}"
                   data-item-id="${escapeHtml(item.id)}"

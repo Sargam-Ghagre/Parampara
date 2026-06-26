@@ -72,11 +72,17 @@ initializeSampleData();
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+const translationsData = require('./data/translationsData');
+
 app.get('/api/language', (req, res) => {
   res.json({
     default: 'en',
     supported: ['en', 'hi', 'mr'],
   });
+});
+
+app.get('/api/translations', (req, res) => {
+  res.json(translationsData);
 });
 
 // API Routes

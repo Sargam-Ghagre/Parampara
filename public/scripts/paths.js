@@ -461,6 +461,11 @@ function displayPaths() {
             <span>📚 ${items.length} ${tPath('paths_items_label')}</span>
             <span>⏱️ ~${Math.ceil(items.length * 3)} ${tPath('paths_min_label')}</span>
           </div>
+          <div class="path-card-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.location.href='map.html?flyover=${path.id}'">
+              🚁 3D Flyover
+            </button>
+          </div>
         </div>`;
     })
     .join('');

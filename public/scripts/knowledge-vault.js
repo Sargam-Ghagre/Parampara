@@ -403,7 +403,7 @@ function buildKnowledgeCard(entry) {
       <div class="knowledge-card-image">
         ${
           entry.imageUrl
-            ? `<img src="${escapeHtml(entry.imageUrl)}" alt="${escapeHtml(entry.title)}" loading="lazy" />`
+            ? `<img src="${escapeHtml(entry.imageUrl)}" alt="${escapeHtml(entry.title)}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" />`
             : `<span class="placeholder-icon"><i class="ti ${icon}" aria-hidden="true"></i></span>`
         }
       </div>
@@ -492,7 +492,7 @@ function buildModalContent(entry) {
     <div class="modal-section">
       <h4><i class="ti ti-photo" aria-hidden="true"></i> Image</h4>
       <div class="modal-media">
-        <img src="${escapeHtml(entry.imageUrl)}" alt="${escapeHtml(entry.title)}" loading="lazy" />
+        <img src="${escapeHtml(entry.imageUrl)}" alt="${escapeHtml(entry.title)}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" />
       </div>
     </div>`
         : ''

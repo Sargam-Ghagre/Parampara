@@ -165,13 +165,14 @@
   }
 
   // ── Boot ──────────────────────────────────────────────────────────────────
-  function boot() {
-    if (typeof PARAMPARA_TRANSLATIONS === 'undefined') {
-      console.error(
-        'Parampara: translations.js must be loaded before language-switcher.js'
-      );
+  async function boot() {
+    try {
+      window.PARAMPARA_TRANSLATIONS = await window.CacheManager.get('/api/translations');
+    } catch (error) {
+      console.error('Parampara: failed to load translations', error);
       return;
     }
+
     injectSelector();
     syncMapSelector();
     applyTranslations(getCurrentLang());

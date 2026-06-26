@@ -1353,3 +1353,5 @@ const PARAMPARA_TRANSLATIONS = {
     paths_no_match_desc: 'वेगळी थीम वापरा किंवा सर्व फिल्टर साफ करा.',
   },
 };
+
+module.exports = { translations, PARAMPARA_TRANSLATIONS };

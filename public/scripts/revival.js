@@ -521,7 +521,7 @@ function renderTraditions(traditions) {
       <div class="tradition-card-image">
         ${
           t.images && t.images.length > 0
-            ? `<img src="${escapeHtml(t.images[0])}" alt="${escapeHtml(t.title)}" loading="lazy" />`
+            ? `<img src="${escapeHtml(t.images[0])}" alt="${escapeHtml(t.title)}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" />`
             : `<span class="placeholder-icon"><i class="ti ${CATEGORY_ICONS[t.category] || 'ti-book'}" aria-hidden="true"></i></span>`
         }
       </div>
@@ -603,7 +603,7 @@ function openModal(traditionId) {
     <div class="modal-section">
       <h4><i class="ti ti-photo" aria-hidden="true"></i> Images</h4>
       <div class="modal-images">
-        ${tradition.images.map((img) => `<img src="${escapeHtml(img)}" alt="${escapeHtml(tradition.title)}" loading="lazy" />`).join('')}
+        ${tradition.images.map((img) => `<img src="${escapeHtml(img)}" alt="${escapeHtml(tradition.title)}" loading="lazy" class="lazy-img" onload="this.classList.add('loaded')" />`).join('')}
       </div>
     </div>`
         : ''
