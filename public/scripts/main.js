@@ -207,5 +207,14 @@ function handleNewVillagePost(post) {
       }
     });
   });
-  observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    
+    // Check if any modal is already active on load
+    const openModal = document.querySelector('.modal.active, .fav-modal-overlay.active');
+    if (openModal && typeof onModalOpen === 'function') {
+      onModalOpen(openModal);
+    }
+  });
 })();
