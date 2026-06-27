@@ -185,7 +185,7 @@ const receivedPostIds = new Set();
 let wsReconnectDelay = 1000;
 
 function initVillagePostsWebSocket() {
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
   const wsUrl = `${protocol}//${window.location.host}`;
   const ws = new WebSocket(wsUrl);
 
@@ -197,7 +197,7 @@ function initVillagePostsWebSocket() {
   ws.onmessage = (event) => {
     try {
       const data = JSON.parse(event.data);
-      if (data.type === 'NEW_POST' && data.payload) {
+      if (data.type === "NEW_POST" && data.payload) {
         handleNewVillagePost(data.payload);
       }
     } catch (err) {
@@ -206,7 +206,9 @@ function initVillagePostsWebSocket() {
   };
 
   ws.onclose = () => {
-    console.warn(`WebSocket disconnected. Reconnecting in ${wsReconnectDelay}ms...`);
+    console.warn(
+      `WebSocket disconnected. Reconnecting in ${wsReconnectDelay}ms...`
+    );
     setTimeout(initVillagePostsWebSocket, wsReconnectDelay);
     wsReconnectDelay = Math.min(wsReconnectDelay * 2, 30000);
   };
@@ -226,20 +228,20 @@ function handleNewVillagePost(post) {
 
   const lang = localStorage.getItem("parampara_lang") || "en";
   const tr = translations[lang] || {};
-  
+
   const title = tr[post.titleKey] || post.title || "New Post";
   const village = tr[post.villageKey] || post.village || "Unknown Village";
   const content = tr[post.contentKey] || post.content || "";
   const type = tr[post.typeKey] || post.type || "Update";
 
   const postHtml = `
-    <div class="post-card new-post" style="opacity: 0; transform: translateY(-20px); transition: all 0.5s ease;">
-        <h4>${title}</h4>
-        <p class="post-meta">${village} • ${formatDate(post.timestamp)}</p>
-        <div class="post-content markdown-body">${renderMarkdown(content)}</div>
-        <span style="display:inline-block;padding:0.25rem 0.75rem;background:var(--primary-color);border-radius:20px;font-size:0.85rem;margin-top:1rem;color:white">
-            ${type}
-        </span>
+    <div class="post-card new-post" style="opacity:0;transform:translateY(-20px);transition:all .5s ease;">
+      <h4>${title}</h4>
+      <p class="post-meta">${village} • ${formatDate(post.timestamp)}</p>
+      <div class="post-content markdown-body">${renderMarkdown(content)}</div>
+      <span style="display:inline-block;padding:.25rem .75rem;background:var(--primary-color);border-radius:20px;font-size:.85rem;margin-top:1rem;color:white">
+        ${type}
+      </span>
     </div>
   `;
 
@@ -248,10 +250,143 @@ function handleNewVillagePost(post) {
   requestAnimationFrame(() => {
     const newEl = postsGrid.firstElementChild;
     if (newEl) {
-      // Trigger reflow
-      void newEl.offsetWidth; 
+      void newEl.offsetWidth;
       newEl.style.opacity = "1";
       newEl.style.transform = "translateY(0)";
     }
   });
 }
+
+// ===== FOCUS TRAPPING UTILITY FOR MODALS =====
+(function () {
+  let activeModal = null;
+  let previousFocusElement = null;
+
+  const focusableElementsString =
+    'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+
+  function trapFocus(e) {
+    if (!activeModal) return;
+
+    const focusableElements = Array.from(
+      activeModal.querySelectorAll(focusableElementsString)
+    ).filter(
+      (el) =>
+        el.offsetWidth > 0 ||
+        el.offsetHeight > 0 ||
+        el.getClientRects().length > 0
+    );
+
+    if (!focusableElements.length) return;
+
+    const first = focusableElements[0];
+    const last = focusableElements[focusableElements.length - 1];
+
+    if (e.key !== "Tab") return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        last.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === last) {
+        first.focus();
+        e.preventDefault();
+      }
+    }
+  }
+
+  function handleEscape(e) {
+    if (!activeModal) return;
+
+    if (e.key === "Escape") {
+      const closeBtn =
+        activeModal.querySelector(".close-btn, .fav-modal-close") ||
+        activeModal.querySelector('[id^="close-"]');
+
+      if (closeBtn) {
+        closeBtn.click();
+      } else {
+        activeModal.classList.remove("active");
+      }
+    }
+  }
+
+  function onModalOpen(modal) {
+    if (activeModal === modal) return;
+
+    previousFocusElement = document.activeElement;
+    activeModal = modal;
+
+    setTimeout(() => {
+      const focusableElements = Array.from(
+        activeModal.querySelectorAll(focusableElementsString)
+      ).filter(
+        (el) =>
+          el.offsetWidth > 0 ||
+          el.offsetHeight > 0 ||
+          el.getClientRects().length > 0
+      );
+
+      if (focusableElements.length) {
+        focusableElements[0].focus();
+      }
+    }, 50);
+
+    document.addEventListener("keydown", trapFocus);
+    document.addEventListener("keydown", handleEscape);
+  }
+
+  function onModalClose(modal) {
+    if (activeModal !== modal) return;
+
+    activeModal = null;
+    document.removeEventListener("keydown", trapFocus);
+    document.removeEventListener("keydown", handleEscape);
+
+    if (previousFocusElement) {
+      previousFocusElement.focus();
+      previousFocusElement = null;
+    }
+  }
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (
+        mutation.type === "attributes" &&
+        mutation.attributeName === "class"
+      ) {
+        const el = mutation.target;
+
+        if (
+          typeof el.className === "string" &&
+          (el.className.includes("modal") ||
+            el.className.includes("fav-modal-overlay"))
+        ) {
+          if (el.classList.contains("active")) {
+            onModalOpen(el);
+          } else {
+            onModalClose(el);
+          }
+        }
+      }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    observer.observe(document.body, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ["class"],
+    });
+
+    const openModal = document.querySelector(
+      ".modal.active, .fav-modal-overlay.active"
+    );
+
+    if (openModal) {
+      onModalOpen(openModal);
+    }
+  });
+})();
