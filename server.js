@@ -15,6 +15,7 @@ const chatRoutes = require('./routes/chat.routes');
 const checkinRoutes = require('./routes/checkin.routes');
 const artisanRoutes = require('./routes/artisan.routes');
 const storyRoutes = require('./routes/story.routes');
+const auditRoutes = require('./routes/audit.routes');
 
 const store = require('./data/store');
 
@@ -105,6 +106,7 @@ app.use('/api/checkin', checkinRoutes);
 
 app.use('/api/story-generator', storyRoutes);
 app.use('/api/artisans', artisanRoutes);
+app.use('/api/audit', auditRoutes);
 
 app.get('/api/reputation', (req, res, next) => {
   try {

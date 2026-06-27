@@ -434,33 +434,39 @@ async function handleAddItem(e) {
 }
 
 function viewItem(id) {
-  const item = allItems.find((i) => i.id === id);
-  if (!item) return;
+const item = allItems.find((i) => i.id === id);
+if (!item) return;
 
-  const lightbox = document.getElementById('gallery-lightbox');
-  const img = document.getElementById('lightbox-image');
-  
-  if (!lightbox) return; // Fallback if HTML is not loaded
-  
-  // Set Info
-  document.getElementById('lightbox-title').textContent = item.title;
-  document.getElementById('lightbox-location').textContent = item.location;
-  document.getElementById('lightbox-type').textContent = translateType(item.type);
-  document.getElementById('lightbox-desc').innerHTML = renderMarkdown(item.description, true);
-  
-  const tagsContainer = document.getElementById('lightbox-tags');
-  tagsContainer.innerHTML = item.tags ? item.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('') : '';
+const lightbox = document.getElementById("gallery-lightbox");
+const img = document.getElementById("lightbox-image");
 
-  // Handle Image or fallback
-  const lens = document.getElementById('magnifier-lens');
-  if (item.imageUrl) {
-    img.src = item.imageUrl;
-    img.style.display = 'block';
-    setupMagnifier(img, lens, item.imageUrl);
-  } else {
-    img.src = '';
-    img.style.display = 'none';
-    if(lens) lens.style.display = 'none';
+if (!lightbox) return; // Fallback if HTML is not loaded
+
+// Set Info
+document.getElementById("lightbox-title").textContent = item.title;
+document.getElementById("lightbox-location").textContent = item.location;
+document.getElementById("lightbox-type").textContent = translateType(item.type);
+document.getElementById("lightbox-desc").innerHTML = renderMarkdown(item.description, true);
+
+const tagsContainer = document.getElementById("lightbox-tags");
+tagsContainer.innerHTML = item.tags
+  ? item.tags
+      .map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`)
+      .join("")
+  : "";
+
+// Handle Image or fallback
+const lens = document.getElementById("magnifier-lens");
+
+if (item.imageUrl) {
+  img.src = item.imageUrl;
+  img.style.display = "block";
+  setupMagnifier(img, lens, item.imageUrl);
+} else {
+  img.src = "";
+  img.style.display = "none";
+  if (lens) lens.style.display = "none";
+}
   }
 
   lightbox.classList.add('active');
