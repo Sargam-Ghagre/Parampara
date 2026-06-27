@@ -273,3 +273,56 @@
   display: flex;
   gap: 1rem;
 }
+
+/* Custom Route Dashboard */
+.route-dashboard {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(45, 24, 16, 0.85);
+  border: 2px solid var(--mustard);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  z-index: 1000;
+  width: 280px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  color: var(--wheat-yellow);
+}
+
+.route-dashboard-header {
+  border-bottom: 1px solid rgba(218, 165, 32, 0.4);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.route-dashboard-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--mustard);
+}
+
+.route-dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.stat-label {
+  color: #ccc;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: var(--warm-beige);
+}

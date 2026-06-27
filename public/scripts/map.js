@@ -6,6 +6,7 @@ let heatmapLayer = null;
 let ambientSoundEnabled = true;
 let currentSound = null;
 let heatmapMarkers = [];
+let draw = null;
 
 let currentLanguage = localStorage.getItem('language') || 'en';
 
@@ -889,3 +890,187 @@ function calculateBearing(startLat, startLng, destLat, destLng) {
   return (brng + 360) % 360;
 }
 // --- Heritage Path Routing ---
+function initRouting() {
+  if (typeof MapboxDraw !== 'undefined') {
+    draw = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        line_string: true,
+        polygon: true,
+        point: true,
+        trash: true,
+        combine_features: true,
+        uncombine_features: true
+      },
+      styles: [
+        {
+          "id": "gl-draw-line",
+          "type": "line",
+          "filter": ["all", ["==", "$type", "LineString"], ["!=", "mode", "static"]],
+          "layout": { "line-cap": "round", "line-join": "round" },
+          "paint": { "line-color": "#f4a261", "line-width": 4, "line-dasharray": [0.2, 2] }
+        },
+        {
+          "id": "gl-draw-polygon-fill",
+          "type": "fill",
+          "filter": ["all", ["==", "$type", "Polygon"], ["!=", "mode", "static"]],
+          "paint": { "fill-color": "#e76f51", "fill-outline-color": "#e76f51", "fill-opacity": 0.3 }
+        },
+        {
+          "id": "gl-draw-polygon-stroke-active",
+          "type": "line",
+          "filter": ["all", ["==", "$type", "Polygon"], ["!=", "mode", "static"]],
+          "layout": { "line-cap": "round", "line-join": "round" },
+          "paint": { "line-color": "#f4a261", "line-width": 2 }
+        },
+        {
+          "id": "gl-draw-point-active",
+          "type": "circle",
+          "filter": ["all", ["==", "$type", "Point"], ["!=", "mode", "static"]],
+          "paint": { "circle-radius": 6, "circle-color": "#e76f51" }
+        }
+      ]
+    });
+    map.addControl(draw, 'top-left');
+
+    map.on('draw.create', updateRouteMetrics);
+    map.on('draw.delete', updateRouteMetrics);
+    map.on('draw.update', updateRouteMetrics);
+
+    const savedRoute = localStorage.getItem('parampara_custom_routes');
+    if (savedRoute) {
+        try {
+            draw.add(JSON.parse(savedRoute));
+            updateRouteMetrics();
+        } catch (e) {
+            console.error("Failed to load saved routes", e);
+        }
+    }
+
+    setupCustomRouteControls();
+  } else {
+    console.warn("MapboxDraw is not loaded.");
+  }
+}
+
+function setupCustomRouteControls() {
+  const btnExport = document.getElementById('btn-export-route');
+  const btnImport = document.getElementById('btn-import-route');
+  const importInput = document.getElementById('import-route-input');
+
+  if (btnExport) {
+    btnExport.addEventListener('click', () => {
+      if (!draw) return;
+      const data = draw.getAll();
+      if (data.features.length > 0) {
+        const json = JSON.stringify(data);
+        const blob = new Blob([json], { type: "application/geo+json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "custom_heritage_route.geojson";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } else {
+        alert("No routes to export. Please draw a route first.");
+      }
+    });
+  }
+
+  if (btnImport) {
+    btnImport.addEventListener('click', () => {
+      importInput.click();
+    });
+  }
+
+  if (importInput) {
+    importInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const geojson = JSON.parse(event.target.result);
+          
+          if (geojson.type === 'FeatureCollection' || geojson.type === 'Feature') {
+             draw.add(geojson);
+             
+             if (geojson.features && geojson.features.length > 0) {
+                 const coordinates = [];
+                 geojson.features.forEach(f => {
+                     if(f.geometry && f.geometry.coordinates) {
+                         if(f.geometry.type === 'Point') {
+                             coordinates.push(f.geometry.coordinates);
+                         } else if (f.geometry.type === 'LineString') {
+                             coordinates.push(...f.geometry.coordinates);
+                         } else if (f.geometry.type === 'Polygon') {
+                             coordinates.push(...f.geometry.coordinates[0]);
+                         }
+                     }
+                 });
+
+                 if(coordinates.length > 0) {
+                     const bounds = coordinates.reduce(function(b, coord) {
+                         return b.extend(coord);
+                     }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+                     
+                     map.fitBounds(bounds, { padding: 50 });
+                 }
+             }
+             alert("Route imported successfully!");
+          } else {
+            alert("Invalid GeoJSON format.");
+          }
+        } catch (err) {
+          console.error("Error parsing GeoJSON:", err);
+          alert("Error parsing the file. Make sure it's a valid GeoJSON file.");
+        }
+        importInput.value = '';
+      };
+      reader.readAsText(file);
+    });
+  }
+}
+
+function updateRouteMetrics() {
+  if (!draw) return;
+  const data = draw.getAll();
+  
+  localStorage.setItem('parampara_custom_routes', JSON.stringify(data));
+  
+  const dashboard = document.getElementById('custom-route-dashboard');
+  if (!dashboard) return;
+
+  if (data.features.length === 0) {
+    dashboard.style.display = 'none';
+    return;
+  }
+  
+  dashboard.style.display = 'block';
+  
+  let totalDistance = 0;
+  let waypoints = 0;
+  
+  if (typeof turf !== 'undefined') {
+    data.features.forEach(feature => {
+      if (feature.geometry.type === 'LineString') {
+         totalDistance += turf.length(feature, {units: 'kilometers'});
+         waypoints += feature.geometry.coordinates.length;
+      } else if (feature.geometry.type === 'Point') {
+         waypoints += 1;
+      }
+    });
+  }
+  
+  const distanceStr = totalDistance.toFixed(2) + ' km';
+  const timeHours = totalDistance / 5;
+  const timeMins = Math.round(timeHours * 60);
+  
+  document.getElementById('route-distance').textContent = distanceStr;
+  document.getElementById('route-time').textContent = timeMins + ' mins';
+  document.getElementById('route-waypoints').textContent = waypoints;
+}
+

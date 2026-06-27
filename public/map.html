@@ -18,6 +18,7 @@
       href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" type="text/css" />
     <link rel="stylesheet" href="styles/languageSelector.css" />
   </head>
   <body>   
@@ -178,6 +179,15 @@
           >
           Ambient Sounds : OFF
           </button>
+          <div class="custom-route-controls" style="display: flex; align-items: center; gap: 0.5rem; margin-left: 0.5rem;">
+            <button id="btn-export-route" class="btn btn-secondary" title="Export Route as GeoJSON">
+              <i class="ti ti-download"></i> Export
+            </button>
+            <input type="file" id="import-route-input" accept=".geojson, .json, application/geo+json" style="display: none;" />
+            <button id="btn-import-route" class="btn btn-secondary" title="Import GeoJSON Route">
+              <i class="ti ti-upload"></i> Import
+            </button>
+          </div>
           
           <div class="radius-search-control" style="display: flex; align-items: center; gap: 0.5rem; margin-left: auto;">
             <select id="radius-select" class="btn btn-secondary" aria-label="Select search radius">
@@ -194,6 +204,27 @@
       </div>
 
       <div id="map" class="map-view"></div>
+
+      <!-- Custom Route Dashboard -->
+      <div id="custom-route-dashboard" class="route-dashboard" style="display: none;">
+        <div class="route-dashboard-header">
+          <h4><i class="ti ti-route"></i> Route Statistics</h4>
+        </div>
+        <div class="route-dashboard-content">
+          <div class="stat-item">
+            <span class="stat-label">Distance</span>
+            <span id="route-distance" class="stat-value">0 km</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Est. Walking Time</span>
+            <span id="route-time" class="stat-value">0 mins</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Waypoints</span>
+            <span id="route-waypoints" class="stat-value">0</span>
+          </div>
+        </div>
+      </div>
       
       <!-- Flyover Controls -->
       <div id="flyover-controls" class="flyover-controls" style="display: none;">
@@ -296,6 +327,8 @@
     <script src="scripts/markdown.js"></script>
 
     <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
     <script src="scripts/cacheLayer.js"></script>
     <script src="scripts/spatial.js"></script>
     <script src="scripts/heritageScoreUtil.js"></script>
