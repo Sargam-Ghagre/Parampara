@@ -2149,7 +2149,8 @@ footer {
   margin: 15px 0;
 }
 
-.markdown-table th, .markdown-table td {
+.markdown-table th,
+.markdown-table td {
   border: 1px solid var(--theme-border);
   padding: 8px 12px;
   text-align: left;
