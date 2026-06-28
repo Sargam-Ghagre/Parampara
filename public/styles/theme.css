@@ -1990,7 +1990,7 @@ footer{
 .parampara-breadcrumb-item.active {
   color: var(--theme-text);
   font-weight: bold;
-}
+} 
 
 /* ==========================================
    QUILL.JS RICH TEXT EDITOR
