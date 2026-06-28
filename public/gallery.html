@@ -145,8 +145,32 @@
             <input type="hidden" name="description" id="hidden-description" required>
           </div>
           <div class="form-group">
-            <label data-i18n="modal_label_image_url">Image URL</label>
-            <input type="url" name="imageUrl" />
+            <label data-i18n="modal_label_image_upload">Upload Image (Optimized)</label>
+            <input type="file" id="image-upload" accept="image/jpeg, image/png, image/webp" />
+            
+            <div id="image-optimization-ui" style="display: none; margin-top: 10px; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <label style="margin: 0; font-size: 0.9em;">Quality Preset:</label>
+                <select id="image-quality" style="width: auto; padding: 4px;">
+                  <option value="high">High</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85em;">
+                <span>Original: <strong id="orig-size">-</strong></span>
+                <span>Compressed: <strong id="comp-size">-</strong></span>
+                <span style="color: #48bb78;">Saved: <strong id="save-percent">-</strong></span>
+              </div>
+              <div style="text-align: center; margin-top: 10px;">
+                <img id="image-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; display: none; object-fit: contain;" />
+              </div>
+            </div>
+            
+            <div style="margin-top: 10px;">
+              <label data-i18n="modal_label_image_url" style="font-size: 0.9em;">Or provide external Image URL</label>
+              <input type="url" name="imageUrl" id="image-url-input" />
+            </div>
           </div>
           <div class="form-group">
             <label data-i18n="modal_label_audio_url">Audio URL (if applicable)</label>
@@ -218,6 +242,7 @@
     <script src="scripts/favoritesManager.js"></script>
     <script src="scripts/shareUtils.js"></script>
     <script src="scripts/webglLightbox.js"></script>
+    <script src="scripts/imageOptimizer.js"></script>
     <script src="scripts/gallery.js"></script>
     <script src="scripts/cacheLayer.js"></script>
     <script src="scripts/languageSwitcher.js"></script>
