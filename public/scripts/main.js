@@ -2,10 +2,22 @@
 
 // Load village posts on page load
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadVillagePosts();
-  initVillagePostsWebSocket(); // Initialize WebSocket
+  initNavbar();
 
-  // ===== HAMBURGER NAV =====
+  try {
+    await loadVillagePosts();
+  } catch (err) {
+    console.error("Failed to load village posts:", err);
+  }
+
+  try {
+    initVillagePostsWebSocket();
+  } catch (err) {
+    console.error("Failed to initialize WebSocket:", err);
+  }
+});
+
+function initNavbar() {
   const hamburgerBtn = document.getElementById("hamburgerBtn");
   const navFullMenu = document.getElementById("navFullMenu");
   const navOverlay = document.getElementById("navOverlay");
@@ -16,9 +28,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function toggleNavMenu(forceOpen) {
-    const isOpen = forceOpen !== undefined
-      ? forceOpen
-      : !navFullMenu.classList.contains("open");
+    const isOpen =
+      forceOpen !== undefined
+        ? forceOpen
+        : !navFullMenu.classList.contains("open");
 
     hamburgerBtn.classList.toggle("open", isOpen);
     navFullMenu.classList.toggle("open", isOpen);
@@ -27,6 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   hamburgerBtn.addEventListener("click", () => toggleNavMenu());
+
   navOverlay.addEventListener("click", () => toggleNavMenu(false));
 
   document.querySelectorAll(".nav-fullmenu-grid a").forEach((link) => {
@@ -34,9 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") toggleNavMenu(false);
+    if (e.key === "Escape") {
+      toggleNavMenu(false);
+    }
   });
-});
+}
 
 async function loadVillagePosts() {
   const DUMMY_POSTS = [
@@ -207,5 +223,14 @@ function handleNewVillagePost(post) {
       }
     });
   });
-  observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    
+    // Check if any modal is already active on load
+    const openModal = document.querySelector('.modal.active, .fav-modal-overlay.active');
+    if (openModal && typeof onModalOpen === 'function') {
+      onModalOpen(openModal);
+    }
+  });
 })();
