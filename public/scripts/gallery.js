@@ -339,6 +339,16 @@ function displayItems(items, append = false) {
                 >
                     ${heartSvg}
                 </button>
+                ${item.panoramaUrl ? `
+                <button
+                  class="panorama-view-btn"
+                  onclick="if(window.panoramaViewer) { window.panoramaViewer.open(${JSON.stringify(item).replace(/"/g, '&quot;')}); event.stopPropagation(); }"
+                  title="View in 360"
+                  style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.7); color:#fff; border:none; padding:5px 10px; border-radius:15px; cursor:pointer; font-size:0.8rem; z-index:2; backdrop-filter: blur(4px);"
+                >
+                  👁️ View 360°
+                </button>
+                ` : ''}
             </div>
             <div class="gallery-item-content" onclick="viewItem('${escapeHtml(item.id)}'); event.stopPropagation();" style="cursor:pointer;">
                 <span class="gallery-item-type">${translateType(item.type)}</span>
@@ -670,6 +680,20 @@ function getSampleItems() {
       location: 'Jodhpur, Rajasthan',
       imageUrl: '',
       tags: ['legend', 'tradition', 'architecture'],
+    },
+    {
+      id: '4',
+      type: 'visual',
+      title: 'Hawa Mahal Interior (360°)',
+      description: 'An immersive 360-degree view from inside the Palace of Winds.',
+      location: 'Jaipur, Rajasthan',
+      imageUrl: 'https://images.unsplash.com/photo-1599661559863-718f6fdf3946?w=600&auto=format&fit=crop',
+      panoramaUrl: 'https://images.unsplash.com/photo-1557971370-e7298ee473cb?q=80&w=2560&auto=format&fit=crop', // Placeholder equirectangular
+      tags: ['architecture', '360', 'heritage'],
+      hotspots: [
+        { lat: 10, lon: 45, info: 'Intricate Jharokhas (windows)' },
+        { lat: -5, lon: -120, info: 'Courtyard view' }
+      ]
     },
   ];
 }
