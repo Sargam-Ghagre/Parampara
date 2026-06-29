@@ -559,7 +559,7 @@ main.paths-container {
     background: rgba(255, 255, 255, 0.12) !important;
     outline: none !important;
     box-shadow: 0 0 0 3px rgba(178, 90, 62, 0.2);
-}
+} 
 
 /* Placeholder text */
 #create-path-modal .form-group input::placeholder,
